@@ -10,20 +10,20 @@ jobs:
     strategy:
       matrix:
         java:
-        - '8'
-        - '11'
-        - '17'
+          - '8'
+          - '11'
+          - '17'
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK ${{ matrix.Java }}
-      uses: actions/setup-java@v2
-      with:
-        java-version: ${{ matrix.java }}
-        distribution: temurin
-        cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml -Dmaven.test.skip=true
+      - uses: actions/checkout@v2
+      - name: Set up JDK ${{ matrix.Java }}
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml -Dmaven.test.skip=true "-Dmaven.compiler.showWarnings=false"
     name: build (${{ matrix.java }})
 'on':
-- push
-- workflow_dispatch
+  - push
+  - workflow_dispatch
